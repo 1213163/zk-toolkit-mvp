@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Age Check ZKP</title>
+</head>
+<body>
+    <h1>Leeftijd ≥ 18 Proof</h1>
+    <input id="birthYear" type="number" placeholder="Geboortejaar">
+    <button onclick="prove()">Check</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function prove() {
+            const birthYear = parseInt(document.getElementById("birthYear").value);
+            const currentYear = new Date().getFullYear();
+            const res = await fetch("/prove", {
+                method: "POST",
+                headers: {"Content-Type":"application/json"},
+                body: JSON.stringify({ birthYear, currentYear })
+            });
+            const data = await res.json();
+            document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+        }
+    </script>
+</body>
+</html>
